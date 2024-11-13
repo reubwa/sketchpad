@@ -4,11 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drawing Basics</title>
+    <title>Sketchpad</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <table class="toolbar">
+        <tr>
+            <td class="toolbar-btn-alt">
+                <button onclick="clearCanvas()" style="padding: 5px;">Clear</button>
+            </td>
+            <td class="toolbar-btn-alt"><P>Compositing Mode</P></td>
+            <td>
+                <select id="c-mode" onchange="changeCompositingMode()">
+                    <option value="source-over">Source Over</option>
+                    <option value="source-out">Source Out</option>
+                    <option value="destination-over">Destination Over</option>
+                    <option value="destination-atop">Destination Atop</option>
+                    <option value="lighter">Lighter</option>
+                    <option value="copy">Copy</option>
+                    <option value="xor">Xor</option>
+                    <option value="multiply">Multiply</option>
+                    <option value="screen">Screen</option>
+                    <option value="darken">Darken</option>
+                    <option value="lighten">Lighten</option>
+                    <option value="hue">Hue</option>
+                    <option value="luminosity">Luminosity</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <button class="tool-btn" onclick="clearEventListeners()">Pointer</button>
+                <button class="tool-btn" onclick="startFreehand()">Freehand</button>
+                <button class="tool-btn" onclick="startDrawRect()">Rect</button>
+                <button class="tool-btn" onclick="startDrawText()">Text</button>
+            </td>
+            <td>
+                <canvas id="canvas"></canvas>
+            </td>
+            <td class="optgroup">
+                <p class="toolbar-btn">Line</p>
+                <input type="color" id="clLine" class="toolbar-btn">
+                <input type="range" step="1" value="10" id="raLine" class="toolbar-btn">
+                <p class="toolbar-btn">Fill</p>
+                <input type="color" id="clFill" class="toolbar-btn">
+                <p class="toolbar-btn">Text</p>
+                <select id="fontpicker" class="toolbar-btn">
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Trebuchet MS">Trebuchet MS</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Garamond">Garamond</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Bush Script MT">Bush Script MT</option>
+                </select>
+                <input type="range" step="1" value="50" id="raFS" class="toolbar-btn">
+            </td>
+        </tr>
+    </table>
     <script src="js/main.js"></script>
 </body>
 </html>
