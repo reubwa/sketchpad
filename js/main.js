@@ -9,6 +9,11 @@ const raL = document.getElementById("raLine");
 const raFS = document.getElementById("raFS");
 const fontpicker = document.getElementById("fontpicker");
 const cm = document.getElementById("c-mode");
+const shCheck = document.getElementById("chSh");
+const shX = document.getElementById("txX");
+const shY = document.getElementById("txY");
+const shC = document.getElementById("clShadow");
+const shB = document.getElementById("txB");
 
 // resize canvas (CSS does scale it up or down)
 canvas.height = height;
@@ -18,6 +23,7 @@ canvas.width = width;
 
 function startFreehand() {
     clearEventListeners();
+    canvas.style.cursor = 'crosshair';
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("mouseup", endDrawing);
     canvas.addEventListener("mousemove", draw);
@@ -58,6 +64,13 @@ function draw(e) {
     context.strokeStyle = cl.value;
     context.lineWidth = raL.value;
     context.lineTo(x, y);
+    if(shCheck.checked)
+    {
+        context.shadowColor = shC.value;
+        context.shadowOffsetX = Number(shX.value);
+        context.shadowOffsetY = Number(shY.value);
+        context.shadowBlur = Number(shB.value);
+    }
     context.stroke();
 }
 
@@ -69,6 +82,7 @@ function draw(e) {
 
 function startDrawRect() {
     clearEventListeners();
+    canvas.style.cursor = 'crosshair';
     canvas.addEventListener("mousedown", startRect);
     canvas.addEventListener("mouseup", endRect);
 }
@@ -86,8 +100,20 @@ function endRect(e) {
     context.lineWidth = raL.value;
     context.strokeStyle = cl.value;
     context.fillStyle = clF.value;
-    context.fillRect(start.x, start.y, x - start.x, y - start.y);
-    context.strokeRect(start.x, start.y, x - start.x, y - start.y);
+
+    if(shCheck.checked)
+    {
+        context.shadowColor = shC.value;
+        context.shadowOffsetX = Number(shX.value);
+        context.shadowOffsetY = Number(shY.value);
+        context.shadowBlur = Number(shB.value);
+        context.fillRect(start.x, start.y, x - start.x, y - start.y);
+    }
+    else
+    {
+        context.fillRect(start.x, start.y, x - start.x, y - start.y);
+        context.strokeRect(start.x, start.y, x - start.x, y - start.y);
+    }
 }
 
 
@@ -98,6 +124,7 @@ function endRect(e) {
 
 function startDrawText() {
     clearEventListeners();
+    canvas.style.cursor = 'text';
     canvas.addEventListener("mousedown", drawText);
 }
 
@@ -110,10 +137,58 @@ function drawText(e) {
     let mCoords = getMousePos(canvas,e);
     let input = prompt("Enter some text");
     context.fillStyle = clF.value;
-    context.fillText(input, mCoords.x, mCoords.y);
+    
+    if(shCheck.checked)
+    {
+        context.shadowColor = shC.value;
+        context.shadowOffsetX = Number(shX.value);
+        context.shadowOffsetY = Number(shY.value);
+        context.shadowBlur = Number(shB.value);
+        context.fillText(input, mCoords.x, mCoords.y);
+    }
+    else
+    {
+        context.fillText(input, mCoords.x, mCoords.y);
+    }
 }
 
 //text end
+
+//outlined text start
+
+function startDrawOutlinedText() {
+    clearEventListeners();
+    canvas.style.cursor = 'text';
+    canvas.addEventListener("mousedown", drawOutlinedText);
+}
+
+function drawOutlinedText(e) {
+    let fontszn = raFS.value;
+    let fontsz = fontszn.concat("px");
+    let fontszfixed = fontsz.concat(" ");
+    let result = fontszfixed.concat(fontpicker.value);
+    context.font = result;
+    let mCoords = getMousePos(canvas,e);
+    let input = prompt("Enter some text");
+    context.lineWidth = 1;
+    context.strokeStyle = cl.value;
+    
+    if(shCheck.checked)
+    {
+        context.shadowColor = shC.value;
+        context.shadowOffsetX = Number(shX.value);
+        context.shadowOffsetY = Number(shY.value);
+        context.shadowBlur = Number(shB.value);
+        context.strokeText(input, mCoords.x, mCoords.y);
+    }
+    else
+    {
+        context.strokeText(input, mCoords.x, mCoords.y);
+    }
+}
+
+//outlined text end
+
 
 function downloadFile(){
     const pngurl = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
@@ -127,12 +202,32 @@ function downloadFile(){
 
 
 function clearEventListeners(){
+    canvas.style.cursor = 'default';
     canvas.removeEventListener("mousedown", startRect);
     canvas.removeEventListener("mouseup", endRect);
     canvas.removeEventListener("mousedown", startDrawing);
     canvas.removeEventListener("mouseup", endDrawing);
     canvas.removeEventListener("mousemove", draw);
     canvas.removeEventListener("mousedown", drawText);
+    canvas.removeEventListener("mousedown", drawOutlinedText);
+    cleanShadow();
+}
+
+function cleanShadow(){
+    context.shadowColor = "transparent";
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
+}
+
+function conditionalCleanShadow(){
+    if(shCheck.checked)
+    {
+        //do nothing
+    }
+    else
+    {
+        cleanShadow();
+    }
 }
 
 function clearCanvas(){

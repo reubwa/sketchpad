@@ -50,19 +50,21 @@
                         title
                     </span>
                 </button>
+                <button class="tool-btn" onclick="startDrawOutlinedText()" title="Outlined Text">
+                    <span class="material-symbols-rounded">
+                        text_format
+                    </span>
+                </button>
             </td>
             <td>
                 <canvas id="canvas"></canvas>
             </td>
             <td class="optgroup">
                 <div class="optpanel">
-                    <p class="optpanelh">Line</p>
-                    <input type="color" id="clLine" class="toolbar-btn">
+                    <p class="optpanelh">Line/Fill</p>
+                    <input type="color" id="clLine" class="toolbar-btn" style="display: inline;">
+                    <input type="color" id="clFill" class="toolbar-btn" style="display: inline;">
                     <input type="range" step="1" value="10" id="raLine" class="toolbar-btn">
-                </div>
-                <div class="optpanel">
-                    <p class="optpanelh">Fill</p>
-                    <input type="color" id="clFill" class="toolbar-btn">
                 </div>
                 <div class="optpanel">
                     <p class="optpanelh">Text</p>
@@ -77,7 +79,7 @@
                         <option value="Courier New">Courier New</option>
                         <option value="Bush Script MT">Bush Script MT</option>
                     </select>
-                    <input type="range" step="1" value="50" id="raFS" class="toolbar-btn">
+                    <input type="range" value="50" id="raFS" class="toolbar-btn">
                 </div>
                 <div class="optpanel">
                     <p class="optpanelh">Compositing Mode</p>
@@ -96,6 +98,18 @@
                         <option value="hue">Hue</option>
                         <option value="luminosity">Luminosity</option>
                     </select>
+                </div>
+                <div class="optpanel">
+                    <p class="optpanelh">
+                        <input type="checkbox" id="chSh" onclick="conditionalCleanShadow()">
+                        Shadow
+                    </p>
+                    <input placeholder="X Offset" id="txX" style="display: inline; width: 25%;">
+                    <input placeholder="Y Offset" id="txY" style="display: inline; width: 25%;">
+                    <div class="bottomrow">
+                        <input placeholder="Blur" id="txB" style="display: inline; width: 25%;">
+                        <input type="color" class="toolbar-btn" id="clShadow" style="display: inline;">
+                    </div>
                 </div>
             </td>
         </tr>

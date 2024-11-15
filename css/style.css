@@ -86,13 +86,13 @@ input {
     border-radius: 5px;
 }
 
-#clLine, #clFill {
+#clLine, #clFill, #clShadow {
     background-color: transparent;
     border: none;
     padding-bottom: 5px;
 }
 
-#clLine:hover, #clFill:hover {
+#clLine:hover, #clFill:hover, #clShadow:hover {
     background-color: rgb(46, 68, 68);
     border-radius: 5px;
 }
