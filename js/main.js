@@ -8,10 +8,7 @@ const clF = document.getElementById("clFill");
 const raL = document.getElementById("raLine");
 const raFS = document.getElementById("raFS");
 const fontpicker = document.getElementById("fontpicker");
-const inputElement = document.getElementById("fp");
 const cm = document.getElementById("c-mode");
-const sb = document.getElementById("sb");
-const rb = document.getElementById("rb");
 
 // resize canvas (CSS does scale it up or down)
 canvas.height = height;
@@ -117,6 +114,16 @@ function drawText(e) {
 }
 
 //text end
+
+function downloadFile(){
+    const pngurl = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+    var link = document.createElement('a');
+    let fn = prompt("Give your sketch a name");
+    link.download = fn.concat(".png");
+    link.href = pngurl;
+    link.click();
+}
+
 
 
 function clearEventListeners(){
